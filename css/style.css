@@ -1,0 +1,112 @@
+* {
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --error-color: #dc3545;
+    --success-color: #28a745;
+}
+
+h1 {
+    text-align: center;
+    padding: 20px;
+}
+
+.container{
+    padding: 40px;
+    align-items: center;
+}
+
+.clientinput {
+    width: 100%;
+    position: relative;
+}
+
+label{
+    font-size: 12px;
+    font-weight: bold;
+    padding: 5px;
+}
+
+.clientinput {
+    margin-bottom: 5px;
+}
+
+.clientinput input:focus {
+    outline: none !important;
+}
+
+.clientinput.error input {
+    border-color: var(--error-color) !important;
+}
+
+.clientinput.success input {
+    border-color: var(--success-color) !important;
+}
+
+.clientinput small {
+    color: var(--error-color) !important;
+}
+
+button:hover {
+    font-size: 1.06rem;
+}
+
+input {
+    border-radius: 20px;
+}
+
+.input::placeholder{
+    color: #aaaaaa;
+}
+
+.clientinput label {
+    font-size: 15px;
+    margin-bottom: 5px;
+    display: flex;
+}
+
+.clientinput+.clientinput {
+    margin-top: 5px;
+}
+
+.clientinput input {
+    width: 100%;
+    display: block;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 15px 10px;
+    border: 2px solid;
+}
+.cadastro {
+    max-width: 430px;
+    background: rgb(149, 179, 222);
+    margin: 0 auto;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
+}
+
+.submit {
+    width: 100%;
+    padding: 15px 10px;
+    background: #323232;
+    color: white;
+    border-radius: 4px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.submit:hover {
+    background: #347a1b;
+}
+
+footer {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 20px;
+    font-weight: 600;
+    font-style: oblique;
+}
