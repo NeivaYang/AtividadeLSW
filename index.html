@@ -9,7 +9,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 </head>
-<body>
+<body class="body">
     <h1 class="titulo">Formulário de Cadastro de Clientes</h1>
     <section class="cadastro">
         <div class="container">
@@ -22,7 +22,7 @@
                 <div class="clientinput form-field">
                     <label for="cpf_cliente">CPF</label>
                     <input name="cpf_cliente" id="cpf_cliente" placeholder="000.000.000-00">
-                    <small></small>
+                    <small id="cpfcheck"></small>
                 </div>
                 <div class="clientinput form-field">
                     <label for="endereco">Endereço</label>
@@ -31,8 +31,8 @@
                 </div>
                 <div class="clientinput form-field">
                     <label for="data_nascimento">Dara de nascimento</label>
-                    <input type="date" id="data_nascimento" placeholder="DD/MM/YYYY">
-                    <small></small>
+                    <input type="date" id="data_nascimento" onsubmit="mostraidade()" placeholder="DD/MM/YYYY">
+                    <small id="age"></small>
                 </div>
                 <div class="clientinput form-field">
                     <label for="renda">Renda mensal</label>
@@ -52,7 +52,6 @@
     <footer>By Yang Neiva</footer>
     <script src="http://jqueryvalidation.org/files/dist/jquery.validate.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.15/jquery.mask.min.js"></script>
 </body>
 <script>
@@ -76,7 +75,7 @@
     const checkClientName = () => {
 
         let valid = false;
-        let tam = 3;
+        let tam = 100;
 
         const username = campo1.value.trim();
         
@@ -92,7 +91,7 @@
 
         let valid = false;
 
-        let tam = 3;
+        let tam = 100;
 
         const ende = campo3.value.trim();
 
@@ -135,7 +134,7 @@
                 checkIdade();
                 break;
             case 'cpf_cliente':
-                if(checkCPF() === true)
+                if(checkCPF() == true)
                     showSuccess(campo6);
                 else showError(campo2, `CPF Inválido`);
                 break;
@@ -217,9 +216,9 @@
                 checkIdade();
                 break;
             case 'cpf_cliente':
-                if(checkCPF() === true)
+                if(checkCPF() == true){
                     showSuccess(campo2);
-                else showError(campo2, `CPF Inválido`);
+                } else showError(campo2, `CPF Inválido`);
                 break;
             case 'profissao':
                 showSuccess(campo6);
@@ -241,26 +240,26 @@
         let valid = false;
         var soma;
         let aux = 0;
-        if(cpfvalidate === '') {
+        if(cpfvalidate == '') {
             return valid;
         }
         
-        if (cpfvalidate === "00000000000" ||
-            cpfvalidate === "11111111111" ||
-            cpfvalidate === "22222222222" ||
-            cpfvalidate === "33333333333" ||
-            cpfvalidate === "44444444444" ||
-            cpfvalidate === "55555555555" ||
-            cpfvalidate === "66666666666" ||
-            cpfvalidate === "77777777777" ||
-            cpfvalidate === "88888888888" ||
-            cpfvalidate === "99999999999") {return valid;}
+        if (cpfvalidate == "00000000000" ||
+            cpfvalidate == "11111111111" ||
+            cpfvalidate == "22222222222" ||
+            cpfvalidate == "33333333333" ||
+            cpfvalidate == "44444444444" ||
+            cpfvalidate == "55555555555" ||
+            cpfvalidate == "66666666666" ||
+            cpfvalidate == "77777777777" ||
+            cpfvalidate == "88888888888" ||
+            cpfvalidate == "99999999999") {return valid;}
 
         for (i=0; i<9; i++){
              soma += parseInt(cpfvalidate.charAt(i)) * (10 - i);
         }
         aux = 11 - (soma % 11);
-        // Resto = (soma * 10) % 11;
+        //aux = (soma * 10) % 11;
 
         if ((aux == 10) || (aux == 11)){
             aux = 0;
@@ -270,12 +269,12 @@
         }
 
         soma = 0;
-        for (i = 0; i < 9; i++) {
+        for (i = 0; i < 10; i++) {
             soma += parseInt(cpfvalidate.charAt(i)) * (11 - i);
         }
 
         aux = 11 - (soma % 11);
-        // Resto = (soma * 10) % 11;
+        // aux = (soma * 10) % 11;
 
         if ((aux == 10) || (aux == 11)) {
             aux = 0;
@@ -289,26 +288,117 @@
         return valid;
     };
 
-    const checkIdade = () => { 
+    // function mostraidade() {
+    //     let valid = false;
+    //     var dataAtual = new Date();
+    //     var anoAtual = dataAtual.getFullYear();
+    //     var anoNascParts = campo4.split('-');
+    //     var diaNasc = anoNascParts[2];
+    //     var mesNasc = anoNascParts[1];
+    //     var anoNasc = anoNascParts[0];
+    //     var idade = anoAtual - anoNasc;
+    //     var mesAtual = dataAtual.getMonth() + 1; 
+    //     //Se mes atual for menor que o nascimento, nao fez aniversario ainda;  
+    //     if(mesAtual < mesNasc || mesAtual == mesNasc && new Date().getDate() < diaNasc){
+    //         idade--;
+    //         showIdade(campo4, `Idade: ${idade}`); 
+    //         document.getElementById("age").innerHTML = `idade = ${idade}`;
+    //     } else {
+    //         //Se estiver no mes do nascimento, verificar o dia
+    //         showIdade(campo4, `Idade: ${idade}`);
+    //         valid = true;
+    //         document.getElementById("age").innerHTML = `idade = ${idade}`;
+    //     } 
+    //     alert(idade);
+    //     return valid; 
+    // }
+
+    function checkIdade() { 
         let valid = false;
         var dataAtual = new Date();
         var anoAtual = dataAtual.getFullYear();
-        var anoNascParts = campo4.split('/');
-        var diaNasc =anoNascParts[0];
-        var mesNasc =anoNascParts[1];
-        var anoNasc =anoNascParts[2];
+        var anoNascParts = $('#data_nascimento').val().split("/");
+        var diaNasc = parseInt(anoNascParts[2],10);
+        var mesNasc = parseInt(anoNascParts[1], 10);
+        var anoNasc = parseInt(anoNascParts[0],10);
         var idade = anoAtual - anoNasc;
         var mesAtual = dataAtual.getMonth() + 1; 
         //Se mes atual for menor que o nascimento, nao fez aniversario ainda;  
-        if(mesAtual < mesNasc || mesAtual ==mesNasc && new Date().getDate() < diaNasc){
+        if(mesAtual < mesNasc || mesAtual == mesNasc && new Date().getDate() < diaNasc){
             idade--;
             showIdade(campo4, `Idade: ${idade}`); 
+            document.getElementById("age").innerHTML = `idade = ${idade}`;
         } else {
             //Se estiver no mes do nascimento, verificar o dia
             showIdade(campo4, `Idade: ${idade}`);
             valid = true;
+            document.getElementById("age").innerHTML = `idade = ${idade}`;
         } 
+        valid =true;
         return valid; 
     }
+
+    // function validacpf() {
+    //     let cpfvalidate = campo2.toString().replace(/[\s.-]*/igm, '');
+    //     let valid = false;
+    //     var soma;
+    //     let aux = 0;
+    //     if(cpfvalidate == '') {
+    //         document.getElementById("cpfcheck").innerHTML = `Inválido`
+    //         return valid;
+
+    //     }
+        
+    //     if (cpfvalidate == "00000000000" ||
+    //         cpfvalidate == "11111111111" ||
+    //         cpfvalidate == "22222222222" ||
+    //         cpfvalidate == "33333333333" ||
+    //         cpfvalidate == "44444444444" ||
+    //         cpfvalidate == "55555555555" ||
+    //         cpfvalidate == "66666666666" ||
+    //         cpfvalidate == "77777777777" ||
+    //         cpfvalidate == "88888888888" ||
+    //         cpfvalidate == "99999999999") {document.getElementById("cpfcheck").innerHTML = `Inválido`; return valid;}
+
+    //     for (i=1; i<= 9; i++){
+    //          soma = soma + parseInt(cpfvalidate.substring(i-1, i)) * (11 - i);
+    //     }
+    //     // aux = 11 - (soma % 11);
+    //     aux = soma % 11;
+
+    //     if ((aux == 10) || (aux == 11) || aux < 2){
+    //         aux = 0;
+    //     } else {
+    //         aux = 11 - aux;
+    //     }
+    //     if (aux !== parseInt(cpfvalidate.substring(9, 10)) ){
+    //         document.getElementById("cpfcheck").innerHTML = `Inválido test`;
+    //         return valid;
+    //     }
+
+    //     soma = 0;
+    //     for (i = 1; i <= 10;  i++) {
+    //         soma = soma + parseInt(cpfvalidate.substring(i-1, i)) * (12 - i);
+    //     }
+
+    //     // aux = 11 - (soma % 11);
+    //     aux = soma % 11;
+
+    //     if ((aux == 10) || (aux == 11) || aux < 2) {
+    //         aux = 0;
+    //     } else {
+    //         aux = 11 - aux;
+    //     }
+    //     if (aux != parseInt(cpfvalidate.substring(10, 11))) { 
+    //         document.getElementById("cpfcheck").innerHTML = `Inválido test`;
+    //         return valid;
+    //     }
+    //     document.getElementById("cpf_cliente").style.bordeColor = "#28a745";
+    //     document.getElementById("cpfcheck").innerHTML = `Válido test`
+    //     valid = true;
+
+    //     return valid;
+    // }
+
 </script>
 </html>

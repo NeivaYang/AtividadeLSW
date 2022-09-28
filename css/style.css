@@ -9,7 +9,12 @@
     --success-color: #28a745;
 }
 
+.body {
+    background: #868b90;
+}
+
 h1 {
+    color: #fff;
     text-align: center;
     padding: 20px;
 }
@@ -81,6 +86,7 @@ input {
     border: 2px solid;
 }
 .cadastro {
+    display: flex;
     max-width: 430px;
     background: rgb(149, 179, 222);
     margin: 0 auto;
